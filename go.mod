@@ -12,7 +12,4 @@ require (
 
 require github.com/pkg/errors v0.9.1
 
-require (
-	github.com/mattn/go-colorable v0.1.8 // indirect
-	github.com/mattn/go-isatty v0.0.12 // indirect
-)
+require github.com/creack/pty v1.1.17
