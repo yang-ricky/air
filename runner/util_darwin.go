@@ -30,8 +30,7 @@ func (e *Engine) killCmd(cmd *exec.Cmd) (pid int, err error) {
 		return pid, errors.Wrapf(err, "failed to kill process by pgid %v", pgid)
 	}
 	// Wait releases any resources associated with the Process.
-	var wstatus syscall.WaitStatus
-	_, err = syscall.Wait4(-pgid, &wstatus, 0, nil)
+	_, err = cmd.Process.Wait()
 	if err != nil {
 		return pid, err
 	}
