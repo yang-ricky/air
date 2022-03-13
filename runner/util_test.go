@@ -202,7 +202,6 @@ func Test_killCmd_SendInterrupt_false(t *testing.T) {
 			pid int
 			cmd *exec.Cmd
 		}{pid: pid, cmd: cmd}
-		_ = cmd.Wait()
 	}()
 	resp := <-startChan
 	t.Logf("process started. checking pid %v", resp.pid)
