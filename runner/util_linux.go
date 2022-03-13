@@ -30,9 +30,8 @@ func (e *Engine) killCmd(cmd *exec.Cmd) (pid int, err error) {
 		return pgid, err
 	}
 	// Wait releases any resources associated with the Process.
-	// Wait releases any resources associated with the Process.
 	var wstatus syscall.WaitStatus
-	_, err = syscall.Wait4(-pgid, &wstatus, 0, nil)
+	_, err = syscall.Wait4(pid, &wstatus, 0, nil)
 	if err != nil {
 		return pid, err
 	}
