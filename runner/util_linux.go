@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/creack/pty"
-	"github.com/pkg/errors"
 )
 
 func (e *Engine) killCmd(cmd *exec.Cmd) (pid int, err error) {
@@ -32,10 +31,10 @@ func (e *Engine) killCmd(cmd *exec.Cmd) (pid int, err error) {
 	}
 	// Wait releases any resources associated with the Process.
 	_, err = cmd.Process.Wait()
-	// Fix test case: Test_killCmd_SendInterrupt_false
-	if err != nil && !errors.Is(err, syscall.ECHILD) {
+	if err != nil {
 		return pid, err
 	}
+
 	e.mainDebug("killed process pid %d successed", pgid)
 	return
 }
