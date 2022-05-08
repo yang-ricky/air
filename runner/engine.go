@@ -428,6 +428,7 @@ func (e *Engine) runBin() error {
 	}
 
 	killFunc := func(cmd *exec.Cmd, stdin io.WriteCloser, stdout io.ReadCloser, stderr io.ReadCloser) {
+		e.watcherLog("Ricky-killFunc-start")
 		defer func() {
 			select {
 			case <-e.exitCh:
@@ -459,11 +460,14 @@ func (e *Engine) runBin() error {
 		if err = os.Remove(cmdBinPath); err != nil {
 			e.mainLog("failed to remove %s, error: %s", e.config.rel(e.config.binPath()), err)
 		}
+		e.watcherLog("Ricky-killFunc-end")
 	}
 	e.withLock(func() {
+		e.watcherLog("Ricky-withLock-start")
 		close(e.binStopCh)
 		e.binStopCh = make(chan bool)
 		go killFunc(cmd, stdin, stdout, stderr)
+		e.watcherLog("Ricky-withLock-end")
 	})
 	e.mainDebug("running process pid %v", cmd.Process.Pid)
 	return nil

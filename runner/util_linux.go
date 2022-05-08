@@ -9,6 +9,7 @@ import (
 )
 
 func (e *Engine) killCmd(cmd *exec.Cmd) (pid int, err error) {
+	e.watcherLog("Ricky-killCmd1")
 	pid = cmd.Process.Pid
 
 	if e.config.Build.SendInterrupt {
@@ -35,7 +36,7 @@ func (e *Engine) killCmd(cmd *exec.Cmd) (pid int, err error) {
 
 func (e *Engine) startCmd(cmd string) (*exec.Cmd, io.WriteCloser, io.ReadCloser, io.ReadCloser, error) {
 	c := exec.Command("/bin/sh", "-c", cmd)
-
+	e.watcherLog("Ricky-startCmd1")
 	c.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	stderr, err := c.StderrPipe()
 	if err != nil {
